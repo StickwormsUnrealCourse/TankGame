@@ -4,6 +4,18 @@
 #include "TankPlayerController.h"
 #include "TankGame.h"
 
+//Tick
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	AimTowardsCrossHair();
+}
+
+void ATankPlayerController::AimTowardsCrossHair()
+{
+	if (!GetControlledTank()) { return; }
+}
+
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();

@@ -17,7 +17,9 @@ class TANKGAME_API ATankPlayerController : public APlayerController
 	
 public:
 	ATank* GetControlledTank() const;
+	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 
-
+private:
+	void AimTowardsCrossHair();
 };
