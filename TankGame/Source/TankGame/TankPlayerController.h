@@ -20,6 +20,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 
+
 private:
 	void AimTowardsCrossHair();
+	bool GetSightRayHitLocation(FVector& hitLocation) const;
+
+	UPROPERTY(EditAnywhere)
+	float crosshairXLoc = 0.5f;
+	UPROPERTY(EditAnywhere)
+	float crosshairYLoc = 0.3333f;
 };
