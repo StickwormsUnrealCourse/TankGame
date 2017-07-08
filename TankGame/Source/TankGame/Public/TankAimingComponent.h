@@ -16,17 +16,40 @@ public:
 
 	UTankAimingComponent();
 
-
-	void SetBarrelRef(UStaticMeshComponent* barrelToSet);
-
 	virtual void BeginPlay() override;
 
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	void SetBarrelRef(UStaticMeshComponent* barrelToSet);
+	void SetTurretRef(UStaticMeshComponent* turretToSet);
 
 	void AimAt(FVector hitLocation, float launchSpeed);
 
 private:
 	UStaticMeshComponent* barrel = nullptr;
+	
+	UStaticMeshComponent* turret = nullptr;
 
+	void MoveBarrelTowards(FVector aimDirection);
+
+	void ElevateBarrel(float relativeSpeed); //degrees per second
+
+	void RotateTurret(float relativeSpeed); //degrees per second
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float elevationSpeed = 5.0f;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float maxElevation = 40.0f;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float minElevation = .0f;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float turretRotationSpeed = 5.0f;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float maxTurretRotation = 360.0f;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float minTurretRotation = .0f;
 
 };

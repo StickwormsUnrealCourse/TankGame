@@ -2,9 +2,8 @@
 
 
 #include "TankPlayerController.h"
+#include "Tank.h"
 #include "TankGame.h"
-
-
 
 void ATankPlayerController::BeginPlay()
 {

@@ -18,6 +18,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelRef(UStaticMeshComponent* barrelToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretRef(UStaticMeshComponent* turretToSet);
+
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
@@ -26,8 +29,6 @@ private:
 	ATank();
 	
 	virtual void BeginPlay() override;
-	
-	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
