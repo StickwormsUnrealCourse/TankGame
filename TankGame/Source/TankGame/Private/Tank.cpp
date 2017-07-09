@@ -1,27 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Tank.h"
-#include "../Public/Tank.h"
+#include "Projectile.h"
 
-
-void ATank::SetBarrelRef(UStaticMeshComponent * barrelToSet)
-{
-	TankAimingComponent->SetBarrelRef(barrelToSet);
-}
-
-void ATank::SetTurretRef(UStaticMeshComponent * turretToSet)
-{
-	TankAimingComponent->SetTurretRef(turretToSet);
-}
 
 ATank::ATank()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-
 }
 
 void ATank::BeginPlay()
@@ -37,8 +21,30 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ATank::SetBarrelRef(UStaticMeshComponent * barrelToSet)
+{
+	TankAimingComponent->SetBarrelRef(barrelToSet);
+	barrel = barrelToSet;
+}
+
+
+void ATank::SetTurretRef(UStaticMeshComponent * turretToSet)
+{
+	TankAimingComponent->SetTurretRef(turretToSet);
+}
+
 void ATank::AimAt(FVector hitLocation)
 {
 	TankAimingComponent->AimAt(hitLocation, launchSpeed);
 }
 
+void ATank::Fire()
+{
+	if (!barrel) { return; }
+	
+	auto emissionPos = barrel->GetSocketLocation("EmissionPos");
+	auto emissionRot = barrel->GetSocketRotation("EmissionPos");
+	auto projectile = GetWorld()->SpawnActor<AProjectile>(projectile_BP, emissionPos, emissionRot);
+	projectile->LaunchProjectile(launchSpeed);
+
+}
