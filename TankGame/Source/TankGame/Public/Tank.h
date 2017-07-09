@@ -47,4 +47,8 @@ private:
 	TSubclassOf<AProjectile> projectile_BP;
 
 	UStaticMeshComponent* barrel;
+
+	float reloadTime = 3.0f;
+
+	double lastFiredTimeStamp = 0;
 };

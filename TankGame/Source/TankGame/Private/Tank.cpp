@@ -44,7 +44,16 @@ void ATank::Fire()
 	
 	auto emissionPos = barrel->GetSocketLocation("EmissionPos");
 	auto emissionRot = barrel->GetSocketRotation("EmissionPos");
-	auto projectile = GetWorld()->SpawnActor<AProjectile>(projectile_BP, emissionPos, emissionRot);
-	projectile->LaunchProjectile(launchSpeed);
+	
+	bool isReloaded = (FPlatformTime::Seconds() - lastFiredTimeStamp) > reloadTime;
+
+	if (isReloaded)
+	{
+		auto projectile = GetWorld()->SpawnActor<AProjectile>(projectile_BP, emissionPos, emissionRot);
+		projectile->LaunchProjectile(launchSpeed);
+		lastFiredTimeStamp = FPlatformTime::Seconds();
+	}
+	
+
 
 }
