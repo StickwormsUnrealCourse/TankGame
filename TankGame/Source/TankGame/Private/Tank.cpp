@@ -21,6 +21,11 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ATank::SetBodyRef(UStaticMeshComponent * bodyToSet)
+{
+	body = bodyToSet;
+}
+
 void ATank::SetBarrelRef(UStaticMeshComponent * barrelToSet)
 {
 	TankAimingComponent->SetBarrelRef(barrelToSet);
@@ -32,6 +37,7 @@ void ATank::SetTurretRef(UStaticMeshComponent * turretToSet)
 {
 	TankAimingComponent->SetTurretRef(turretToSet);
 }
+
 
 void ATank::AimAt(FVector hitLocation)
 {
@@ -53,7 +59,31 @@ void ATank::Fire()
 		projectile->LaunchProjectile(launchSpeed);
 		lastFiredTimeStamp = FPlatformTime::Seconds();
 	}
+}
+
+void ATank::SetLeftThrottle(float throttle)
+{
+
+
+	UE_LOG(LogTemp, Warning, TEXT("Left Throttle: %f"), throttle);
 	
+	if (!body) { return; }
 
+	auto forceApplied = body->GetForwardVector() * throttle * maxThrottleForce;
+	auto forceLocation = body->GetSocketLocation("LeftTrack");
+	//auto tankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+	body->AddForceAtLocation(forceApplied, forceLocation);
+	
+}
 
+void ATank::SetRightThrottle(float throttle)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Right Throttle: %f"), throttle);
+
+	if (!body) { return; }
+
+	auto forceApplied = body->GetForwardVector() * throttle * maxThrottleForce;
+	auto forceLocation = body->GetSocketLocation("RightTrack");
+	//auto tankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+	body->AddForceAtLocation(forceApplied, forceLocation);
 }

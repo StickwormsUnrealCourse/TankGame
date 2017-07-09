@@ -24,8 +24,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretRef(UStaticMeshComponent* turretToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBodyRef(UStaticMeshComponent* bodyToSet);
+
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
+
+	UFUNCTION(BlueprintCallable, Category = Input)
+	void SetLeftThrottle(float throttle);
+
+	UFUNCTION(BlueprintCallable, Category = Input)
+	void SetRightThrottle(float throttle);
 
 	void AimAt(FVector hitLocation);
 
@@ -47,9 +56,12 @@ private:
 	TSubclassOf<AProjectile> projectile_BP;
 
 	UStaticMeshComponent* barrel;
+	UStaticMeshComponent* body;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float reloadTime = 3.0f;
 
 	double lastFiredTimeStamp = 0;
+
+	float maxThrottleForce = 100000000.0f;	//Theres two of these for each track 
 };
