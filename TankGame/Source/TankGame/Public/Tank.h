@@ -40,14 +40,15 @@ private:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float launchSpeed = 100000;//TODO find sensible default
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> projectile_BP;
 
 	UStaticMeshComponent* barrel;
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float reloadTime = 3.0f;
 
 	double lastFiredTimeStamp = 0;
