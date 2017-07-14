@@ -7,10 +7,8 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-
 	UE_LOG(LogTemp, Warning, TEXT("%s AITANK Reporting for duty."), *(GetPawn()->GetName()));
 	
-
 }
 
 void ATankAIController::Tick(float DeltaTime)
@@ -22,10 +20,6 @@ void ATankAIController::Tick(float DeltaTime)
 	
 	if (!playerTank) { return; }
 
-
-
-
-	
 	controlledTank->AimAt(playerTank->GetActorLocation());
 	controlledTank->Fire();
 	

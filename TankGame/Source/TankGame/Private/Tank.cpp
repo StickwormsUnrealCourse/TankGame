@@ -1,11 +1,13 @@
 #include "Tank.h"
 #include "Projectile.h"
-
+#include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 
 ATank::ATank()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 void ATank::BeginPlay()
@@ -65,7 +67,7 @@ void ATank::SetLeftThrottle(float throttle)
 {
 
 
-	UE_LOG(LogTemp, Warning, TEXT("Left Throttle: %f"), throttle);
+	//UE_LOG(LogTemp, Warning, TEXT("Left Throttle: %f"), throttle);
 	
 	if (!body) { return; }
 
@@ -78,7 +80,7 @@ void ATank::SetLeftThrottle(float throttle)
 
 void ATank::SetRightThrottle(float throttle)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Right Throttle: %f"), throttle);
+	//UE_LOG(LogTemp, Warning, TEXT("Right Throttle: %f"), throttle);
 
 	if (!body) { return; }
 

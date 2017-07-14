@@ -2,14 +2,16 @@
 
 #pragma once
 
-#include "Projectile.h"
-#include "TankAimingComponent.h"
+//#include "Projectile.h"
+//#include "TankAimingComponent.h"
+//#include "TankMovementComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-//class AProjetile;
-//class TankAimingComponent;
+class AProjectile;
+class UTankAimingComponent;
+class UTankMovementComponent;
 
 UCLASS()
 class TANKGAME_API ATank : public APawn
@@ -40,6 +42,9 @@ public:
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+	
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 
@@ -63,5 +68,5 @@ private:
 
 	double lastFiredTimeStamp = 0;
 
-	float maxThrottleForce = 100000000.0f;	//Theres two of these for each track 
+	float maxThrottleForce = 50000000.0f;	//Theres two of these for each track 
 };
