@@ -3,18 +3,36 @@
 #include "TankMovementComponent.h"
 #include "Tank.h"
 
+
+
 void UTankMovementComponent::Initialise(UStaticMeshComponent* bodyToSet)
 {
-	auto controlledTank = Cast<ATank>(GetPawn());
+	
 	body = bodyToSet;
+	
+
+	//auto temp = GetOwner()->GetRootComponent();
+	//UE_LOG(LogTemp, Warning, TEXT("Temp %s"), *temp->GetName());
+	
+	auto controlledTank = Cast<ATank>(GetOwner());
+	UE_LOG(LogTemp, Warning, TEXT("Temp %s"), *controlledTank->GetName());
+
+	
+	/*
+	controlledTank = Cast<ATank>(GetOwner()->GetRootComponent());
+	UE_LOG(LogTemp, Warning, TEXT("Tank Component: %s"), *controlledTank->GetName());
+	*/
 }
+
 
 void UTankMovementComponent::IntendMoveForward(float amount)
 {
 	UE_LOG(LogTemp, Warning, TEXT("IntendMoveForward: %f"), amount);
 
-	if (!body) { return; }
+	
+	if (!controlledTank) { return; }
 
-
-
+	controlledTank->SetLeftThrottle(amount);
+	controlledTank->SetRightThrottle(amount);
+	
 }

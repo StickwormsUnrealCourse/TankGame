@@ -24,5 +24,5 @@ public:
 private:
 	UStaticMeshComponent* body;
 	ATank* controlledTank;
-	
+
 };
