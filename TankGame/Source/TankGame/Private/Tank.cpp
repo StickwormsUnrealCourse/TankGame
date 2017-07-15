@@ -13,7 +13,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called to bind functionality to input
@@ -65,14 +64,12 @@ void ATank::Fire()
 
 void ATank::SetLeftThrottle(float throttle)
 {
-
-
 	//UE_LOG(LogTemp, Warning, TEXT("Left Throttle: %f"), throttle);
 	
 	if (!body) { return; }
 
 	auto forceApplied = body->GetForwardVector() * throttle * maxThrottleForce;
-	auto forceLocation = body->GetSocketLocation("LeftTrack");
+	auto forceLocation = body->GetSocketLocation("LTrack");
 	//auto tankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	body->AddForceAtLocation(forceApplied, forceLocation);
 	
@@ -85,7 +82,7 @@ void ATank::SetRightThrottle(float throttle)
 	if (!body) { return; }
 
 	auto forceApplied = body->GetForwardVector() * throttle * maxThrottleForce;
-	auto forceLocation = body->GetSocketLocation("RightTrack");
+	auto forceLocation = body->GetSocketLocation("RTrack");
 	//auto tankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	body->AddForceAtLocation(forceApplied, forceLocation);
 }
