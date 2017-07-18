@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "TankAimingComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -9,11 +7,10 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
 }
-
 
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
@@ -22,6 +19,12 @@ void UTankAimingComponent::BeginPlay()
 
 	// ...
 	
+}
+
+
+void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Ticking"))
 }
 
 void UTankAimingComponent::SetBarrelRef(UStaticMeshComponent * barrelToSet)

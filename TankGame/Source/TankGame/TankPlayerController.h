@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -6,6 +5,7 @@
 #include "TankPlayerController.generated.h"	//Must be last include
 
 class ATank;
+class UTankAimingComponent;
 
 UCLASS()
 class TANKGAME_API ATankPlayerController : public APlayerController
@@ -13,10 +13,15 @@ class TANKGAME_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
-	ATank* GetControlledTank() const;
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 	void AimTowardsCrossHair();
