@@ -4,6 +4,8 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+class AProjectile;
+
 UENUM()
 enum class EFiringState :uint8
 {
@@ -26,7 +28,14 @@ public:
 	void SetBarrelRef(UStaticMeshComponent* barrelToSet);
 	void SetTurretRef(UStaticMeshComponent* turretToSet);
 
-	void AimAt(FVector hitLocation, float launchSpeed);
+	void AimAt(FVector hitLocation);
+
+	//New
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialise(UStaticMeshComponent* barrelToSet, UStaticMeshComponent* turretToSet);
+	
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void Fire();
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -63,6 +72,15 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float minTurretRotation = .0f;
 
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> projectile_BP;
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float launchSpeed = 100000;//TODO find sensible default
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float reloadTime = 3.0f;
+
+	double lastFiredTimeStamp = 0;
 
 };

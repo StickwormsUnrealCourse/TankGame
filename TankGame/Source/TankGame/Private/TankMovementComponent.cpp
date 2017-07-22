@@ -6,12 +6,10 @@ IntendMoveForward and IntendTurnRight to set the throttles on the tank.
 */
 
 #include "TankMovementComponent.h"
-#include "Tank.h"
 
 void UTankMovementComponent::Initialise(UStaticMeshComponent* bodyToSet)
 {
 	body = bodyToSet;
-	controlledTank = Cast<ATank>(GetOwner());	
 }
 
 
@@ -36,20 +34,43 @@ void UTankMovementComponent::IntendMoveForward(float amount)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("IntendMoveForward: %f"), amount);
 
-	if (!controlledTank) { return; }
-	
-	controlledTank->SetLeftThrottle(amount);
-	controlledTank->SetRightThrottle(amount);
+	if (!ensure(body)) { return; }
+
+	SetLeftThrottle(amount);
+	SetRightThrottle(amount);
 }
 
 void UTankMovementComponent::IntendTurnRight(float amount)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("IntendMoveRight: %f"), amount);
 
-	if (!controlledTank) { return; }
+	if (!ensure(body)) { return; }
 
-	controlledTank->SetLeftThrottle(amount);
-	controlledTank->SetRightThrottle(-amount);
+	SetLeftThrottle(amount);
+	SetRightThrottle(-amount);
+}
+
+void UTankMovementComponent::SetLeftThrottle(float throttle)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Left Throttle: %f"), throttle);
+
+	if (!ensure(body)) { return; }
+
+	auto forceApplied = body->GetForwardVector() * throttle * maxThrottleForce;
+	auto forceLocation = body->GetSocketLocation("LTrack");
+	body->AddForceAtLocation(forceApplied, forceLocation);
+
+}
+
+void UTankMovementComponent::SetRightThrottle(float throttle)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Right Throttle: %f"), throttle);
+
+	if (!ensure(body)) { return; }
+
+	auto forceApplied = body->GetForwardVector() * throttle * maxThrottleForce;
+	auto forceLocation = body->GetSocketLocation("RTrack");
+	body->AddForceAtLocation(forceApplied, forceLocation);
 }
 
 

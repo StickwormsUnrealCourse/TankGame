@@ -7,22 +7,19 @@ GetSightRayHitLocation finds what the screen crosshair is pointing at
 */
 
 #include "TankPlayerController.h"
-#include "Tank.h"
 #include "TankAimingComponent.h"
 #include "TankGame.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	auto tank = GetControlledTank();	
-	auto aimingComponent = tank->FindComponentByClass<UTankAimingComponent>();
 	
+	aimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+
 	if (aimingComponent)
 	{
 		FoundAimingComponent(aimingComponent);
 	}
-
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -33,13 +30,13 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrossHair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(aimingComponent)) { return; }
 
 	FVector hitLocation = FVector(0.0f);
 	if (GetSightRayHitLocation(hitLocation))	//Side Effect: RayTrace
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *hitLocation.ToString());
-		GetControlledTank()->AimAt(hitLocation);
+		aimingComponent->AimAt(hitLocation);
 	}
 }
 
@@ -66,10 +63,4 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& hitLocation) const
 	if (hit.IsValidBlockingHit()) {return true;}
 	return false;
 }
-
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 

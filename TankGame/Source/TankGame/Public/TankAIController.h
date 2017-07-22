@@ -5,6 +5,7 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
+class UTankAimingComponent;
 
 UCLASS()
 class TANKGAME_API ATankAIController : public AAIController
@@ -17,5 +18,8 @@ private:
 	virtual void Tick(float DeltaTime) override;
 	
 	float acceptanceRadius = 3000;
+
+	//New
+	UTankAimingComponent* aimingComponent = nullptr;
 
 };

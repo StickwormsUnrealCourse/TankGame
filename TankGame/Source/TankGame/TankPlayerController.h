@@ -4,7 +4,6 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"	//Must be last include
 
-class ATank;
 class UTankAimingComponent;
 
 UCLASS()
@@ -17,9 +16,6 @@ public:
 	virtual void BeginPlay() override;
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
@@ -31,4 +27,6 @@ private:
 	float crosshairXLoc = 0.5f;
 	UPROPERTY(EditDefaultsOnly)
 	float crosshairYLoc = 0.3333f;
+
+	UTankAimingComponent* aimingComponent = nullptr;
 };

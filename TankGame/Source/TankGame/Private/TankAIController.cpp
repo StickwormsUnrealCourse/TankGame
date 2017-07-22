@@ -6,26 +6,29 @@ Aims towards player
 
 */
 
+
 #include "TankAIController.h"
 #include "TankGame.h"
+#include "TankAimingComponent.h"
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
 	//UE_LOG(LogTemp, Warning, TEXT("%s AITANK Reporting for duty."), *(GetPawn()->GetName()));
+
+	aimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	auto controlledTank = Cast<ATank>(GetPawn());
-	auto playerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	
-	if (!playerTank) { return; }
+	auto player = GetWorld()->GetFirstPlayerController()->GetPawn();	
+	if (!ensure(player)) { return; }
 
-	MoveToActor(playerTank, acceptanceRadius);
-	controlledTank->AimAt(playerTank->GetActorLocation());
-	//controlledTank->Fire();
+	MoveToActor(player, acceptanceRadius);
+
+	aimingComponent->AimAt(player->GetActorLocation());
+	aimingComponent->Fire();
 }

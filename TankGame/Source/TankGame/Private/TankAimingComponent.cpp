@@ -6,11 +6,18 @@ then uses MoveBarrelTowards to position the barrel for firing.
 
 #include "TankAimingComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Projectile.h"
 
 
 UTankAimingComponent::UTankAimingComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+}
+
+void UTankAimingComponent::Initialise(UStaticMeshComponent* barrelToSet, UStaticMeshComponent* turretToSet)
+{
+	barrel = barrelToSet;
+	turret = turretToSet;
 }
 
 void UTankAimingComponent::BeginPlay()
@@ -23,17 +30,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	//UE_LOG(LogTemp, Warning, TEXT("Ticking"))
 }
 
-void UTankAimingComponent::SetBarrelRef(UStaticMeshComponent * barrelToSet)
-{
-	barrel = barrelToSet;
-}
-
-void UTankAimingComponent::SetTurretRef(UStaticMeshComponent * turretToSet)
-{
-	turret = turretToSet;
-}
-
-void UTankAimingComponent::AimAt(FVector hitLocation, float launchSpeed)
+void UTankAimingComponent::AimAt(FVector hitLocation)
 {
 	/*
 	UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s from %s. Velocity: %f"),
@@ -43,7 +40,7 @@ void UTankAimingComponent::AimAt(FVector hitLocation, float launchSpeed)
 		launchSpeed);
 	*/
 
-	if (!barrel) { return; }
+	if (!ensure(barrel)) { return; }
 
 	FVector outLaunchVelocity;
 	FVector startPos = barrel->GetSocketLocation(FName("EmissionPos"));
@@ -88,3 +85,19 @@ void UTankAimingComponent::RotateTurret(float relativeSpeed)
 }
 
 
+void UTankAimingComponent::Fire()
+{
+	if (!ensure(barrel)) { return; }
+
+	auto emissionPos = barrel->GetSocketLocation("EmissionPos");
+	auto emissionRot = barrel->GetSocketRotation("EmissionPos");
+
+	bool isReloaded = (FPlatformTime::Seconds() - lastFiredTimeStamp) > reloadTime;
+
+	if (isReloaded)
+	{
+		auto projectile = GetWorld()->SpawnActor<AProjectile>(projectile_BP, emissionPos, emissionRot);
+		projectile->LaunchProjectile(launchSpeed);
+		lastFiredTimeStamp = FPlatformTime::Seconds();
+	}
+}
