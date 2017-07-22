@@ -1,30 +1,26 @@
+/*
+Sets refs to: barrel, turret
+AimAt function: takes a desired location and launch speed to calculate an aiming direction,
+then uses MoveBarrelTowards to position the barrel for firing.
+*/
+
 #include "TankAimingComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 
-// Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
-// Called when the game starts
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
-
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Ticking"))
+	//UE_LOG(LogTemp, Warning, TEXT("Ticking"))
 }
 
 void UTankAimingComponent::SetBarrelRef(UStaticMeshComponent * barrelToSet)

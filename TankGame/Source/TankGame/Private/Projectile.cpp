@@ -1,7 +1,12 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*
+Base class for fired projectile.
+
+Is provided speed on launch and travel forwards.
+
+*/
+
 
 #include "Projectile.h"
-
 
 // Sets default values
 AProjectile::AProjectile()
@@ -13,19 +18,14 @@ AProjectile::AProjectile()
 	projectileMovement->bAutoActivate = false;
 }
 
-// Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-
-
 }
 
-// Called every frame
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AProjectile::LaunchProjectile(float speed)

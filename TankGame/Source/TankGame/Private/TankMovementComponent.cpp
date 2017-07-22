@@ -1,3 +1,10 @@
+/*
+Inherits from NavMovementComp
+Sets refs to: body and controlledTank
+Overrides RequestDirectMove to utilise:
+IntendMoveForward and IntendTurnRight to set the throttles on the tank.
+*/
+
 #include "TankMovementComponent.h"
 #include "Tank.h"
 

@@ -1,3 +1,11 @@
+/*
+Gets the controlled tank and the player tank
+Each frame:
+Moves towards player
+Aims towards player
+
+*/
+
 #include "TankAIController.h"
 #include "TankGame.h"
 

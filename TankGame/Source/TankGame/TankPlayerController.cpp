@@ -1,3 +1,11 @@
+/*
+Sets refs to: tank, aimingComp
+Uses FoundAimingComponent to set a reference in blueprint
+Tick uses AimTowardsCrosshair to get the camera hit location to drive the AimAt on tank
+GetSightRayHitLocation finds what the screen crosshair is pointing at
+
+*/
+
 #include "TankPlayerController.h"
 #include "Tank.h"
 #include "TankAimingComponent.h"

@@ -1,3 +1,13 @@
+/*
+Tank
+Binds functionality to input
+Sets refs to: body, barrel, turret
+Passes the hitlocation of the viewport to the AimAt component
+Spawns and fires the projectile checking if its reloaded or not from the barrel socket
+Sets left and right throttle (using sockets on the tank body)
+
+*/
+
 #include "Tank.h"
 #include "Projectile.h"
 #include "TankAimingComponent.h"
@@ -19,7 +29,6 @@ void ATank::BeginPlay()
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void ATank::SetBodyRef(UStaticMeshComponent * bodyToSet)
