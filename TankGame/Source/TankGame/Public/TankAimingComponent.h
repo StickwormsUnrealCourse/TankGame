@@ -48,6 +48,10 @@ private:
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
+	bool IsBarrelMoving();
+
+	bool IsReloaded();
+
 	void MoveBarrelTowards(FVector aimDirection);
 
 	void ElevateBarrel(float relativeSpeed); //degrees per second
@@ -82,5 +86,7 @@ private:
 	float reloadTime = 3.0f;
 
 	double lastFiredTimeStamp = 0;
+
+	FVector aimDir;
 
 };
