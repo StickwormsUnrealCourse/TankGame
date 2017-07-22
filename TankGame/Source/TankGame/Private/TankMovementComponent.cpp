@@ -7,11 +7,36 @@ IntendMoveForward and IntendTurnRight to set the throttles on the tank.
 
 #include "TankMovementComponent.h"
 
+
+/*
+UTankMovementComponent::UTankMovementComponent()
+{
+	PrimaryComponentTick.bCanEverTick = true;
+}
+*/
+
+void UTankMovementComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	//Super::TickComponent();
+
+	//Prevent sideways movement of the tank
+	//Movement to the right side
+	auto root = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+	auto slippageSpeed = FVector::DotProduct(root->GetRightVector(), root->GetComponentVelocity());
+	
+	//Acceleration required this frame to correct sideways movement
+	auto correctionAcceleration = -slippageSpeed / DeltaTime * root->GetRightVector();
+
+	//Force required to correct (F = ma)
+	auto correctionForce = (root->GetMass() * correctionAcceleration) / 2.0f; //Two Tracks
+	root->AddForce(correctionForce);
+
+}
+
 void UTankMovementComponent::Initialise(UStaticMeshComponent* bodyToSet)
 {
 	body = bodyToSet;
 }
-
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {

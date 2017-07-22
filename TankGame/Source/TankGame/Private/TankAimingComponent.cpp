@@ -29,6 +29,8 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Ticking"))
 
+	//Super::TickComponent();
+
 	if (!IsReloaded())
 	{
 		firingState = EFiringState::Reloading;

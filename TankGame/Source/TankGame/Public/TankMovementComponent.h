@@ -13,6 +13,8 @@ class TANKGAME_API UTankMovementComponent : public UNavMovementComponent
 	
 public:
 
+	//UTankMovementComponent();
+
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UStaticMeshComponent* bodyToSet);
 
@@ -29,6 +31,9 @@ public:
 	void SetRightThrottle(float throttle);
 
 private:
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
 	UStaticMeshComponent* body = nullptr;
 
 	//Called from pathfinding on AI Controller
