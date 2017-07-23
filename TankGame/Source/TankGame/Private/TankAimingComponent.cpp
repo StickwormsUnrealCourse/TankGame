@@ -90,7 +90,14 @@ void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
 	auto aimAsRotator = aimDirection.Rotation();
 	auto deltaRotator = aimAsRotator - barrelRotator;
 
-	RotateTurret(deltaRotator.Yaw);
+	if (FMath::Abs(deltaRotator.Yaw) < 180)	//Move in nearest direction
+	{
+		RotateTurret(deltaRotator.Yaw);
+	}
+	else
+	{
+		RotateTurret(-deltaRotator.Yaw);
+	}
 	ElevateBarrel(deltaRotator.Pitch);
 }
 
@@ -107,6 +114,7 @@ void UTankAimingComponent::ElevateBarrel(float relativeSpeed)
 void UTankAimingComponent::RotateTurret(float relativeSpeed)
 {
 	auto rotationChange = relativeSpeed * turretRotationSpeed * GetWorld()->DeltaTimeSeconds;
+	
 	auto rotation = turret->RelativeRotation.Yaw + rotationChange;
 	//rotation = FMath::Clamp<float>(rotation, minTurretRotation, maxTurretRotation);
 

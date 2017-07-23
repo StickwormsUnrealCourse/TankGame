@@ -61,6 +61,8 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& hitLocation) const
 		);
 	hitLocation = hit.Location;
 
+	//UE_LOG(LogTemp, Warning, TEXT("Target: %i"), hit.IsValidBlockingHit());
+
 	if (hit.IsValidBlockingHit()) {return true;}
 	return false;
 }
