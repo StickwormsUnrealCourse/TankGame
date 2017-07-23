@@ -24,6 +24,9 @@ void UTankAimingComponent::Initialise(UStaticMeshComponent* barrelToSet, UStatic
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (!ensure(turret)) { return; }
+	if (!ensure(barrel)) { return; }
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
@@ -83,6 +86,7 @@ void UTankAimingComponent::AimAt(FVector hitLocation)
 
 bool UTankAimingComponent::IsBarrelMoving()
 {
+	if (!ensure(barrel)) { return 0; }
 	auto barrelForward = barrel->GetForwardVector();
 	return !(barrelForward.Equals(aimDir, 0.1f));
 }
@@ -117,6 +121,8 @@ void UTankAimingComponent::ElevateBarrel(float relativeSpeed)
 
 void UTankAimingComponent::RotateTurret(float relativeSpeed)
 {
+	if (!ensure(turret)) { return; }
+
 	auto rotationChange = relativeSpeed * turretRotationSpeed * GetWorld()->DeltaTimeSeconds;
 	
 	auto rotation = turret->RelativeRotation.Yaw + rotationChange;
