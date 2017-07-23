@@ -145,6 +145,8 @@ void UTankAimingComponent::Fire()
 		auto projectile = GetWorld()->SpawnActor<AProjectile>(projectile_BP, emissionPos, emissionRot);
 		projectile->LaunchProjectile(launchSpeed);
 		lastFiredTimeStamp = FPlatformTime::Seconds();
+
+		UE_LOG(LogTemp, Warning, TEXT("%s Fired."), *(GetOwner()->GetName()));
 	}
 }
 
@@ -153,7 +155,7 @@ EFiringState UTankAimingComponent::GetFiringState()
 	return firingState;
 }
 
-int UTankAimingComponent::GetAmmo()
+int32 UTankAimingComponent::GetAmmo()
 {
 	return ammo;
 }

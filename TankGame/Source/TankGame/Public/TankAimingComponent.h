@@ -40,15 +40,12 @@ public:
 
 	EFiringState GetFiringState();
 
-	int GetAmmo();
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	int32 GetAmmo();
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState firingState = EFiringState::Reloading;
-
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	int ammo = 3;
-
 
 private:
 	UStaticMeshComponent* barrel = nullptr;
@@ -66,6 +63,9 @@ private:
 	void ElevateBarrel(float relativeSpeed); //degrees per second
 
 	void RotateTurret(float relativeSpeed); //degrees per second
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> projectile_BP;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float elevationSpeed = 5.0f;
@@ -85,14 +85,14 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float minTurretRotation = .0f;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AProjectile> projectile_BP;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float launchSpeed = 100000;//TODO find sensible default
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float reloadTime = 3.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "State")
+	int32 ammo = 3;
 
 	double lastFiredTimeStamp = 0;
 
