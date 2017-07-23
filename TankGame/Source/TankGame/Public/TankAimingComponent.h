@@ -9,6 +9,7 @@ class AProjectile;
 UENUM()
 enum class EFiringState :uint8
 {
+	OutOfAmmo,
 	Reloading,
 	Aiming,
 	Locked
@@ -39,9 +40,15 @@ public:
 
 	EFiringState GetFiringState();
 
+	int GetAmmo();
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState firingState = EFiringState::Reloading;
+
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	int ammo = 3;
+
 
 private:
 	UStaticMeshComponent* barrel = nullptr;
@@ -90,5 +97,7 @@ private:
 	double lastFiredTimeStamp = 0;
 
 	FVector aimDir;
+
+
 
 };

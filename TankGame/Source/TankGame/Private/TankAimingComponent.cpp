@@ -31,8 +31,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	//UE_LOG(LogTemp, Warning, TEXT("Ticking"))
 
 	//Super::TickComponent();
-
-	if (!IsReloaded())
+	if (ammo < 1)
+	{
+		firingState = EFiringState::OutOfAmmo;
+	}
+	else if (!IsReloaded())
 	{
 		firingState = EFiringState::Reloading;
 	}
@@ -130,8 +133,9 @@ void UTankAimingComponent::Fire()
 	auto emissionPos = barrel->GetSocketLocation("EmissionPos");
 	auto emissionRot = barrel->GetSocketRotation("EmissionPos");
 
-	if (IsReloaded())
+	if (IsReloaded() && ammo > 0)
 	{
+		ammo--;
 		auto projectile = GetWorld()->SpawnActor<AProjectile>(projectile_BP, emissionPos, emissionRot);
 		projectile->LaunchProjectile(launchSpeed);
 		lastFiredTimeStamp = FPlatformTime::Seconds();
@@ -141,4 +145,9 @@ void UTankAimingComponent::Fire()
 EFiringState UTankAimingComponent::GetFiringState()
 {
 	return firingState;
+}
+
+int UTankAimingComponent::GetAmmo()
+{
+	return ammo;
 }
