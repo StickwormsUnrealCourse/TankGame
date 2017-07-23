@@ -1,11 +1,15 @@
 #pragma once
 
+
+//#include "ParticleDefinitions.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
 //class UProjectileMovementComponent;
+//class UParticleSystemComponent;
+
 
 UCLASS()
 class TANKGAME_API AProjectile : public AActor
@@ -24,5 +28,11 @@ protected:
 
 private:
 	UProjectileMovementComponent* projectileMovement = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* collisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* launchBlast = nullptr;
 
 };

@@ -7,6 +7,10 @@ Is provided speed on launch and travel forwards.
 
 
 #include "Projectile.h"
+//#include "ParticleDefinitions.h"
+#include "ParticleHelper.h"
+#include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -16,6 +20,14 @@ AProjectile::AProjectile()
 
 	projectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	projectileMovement->bAutoActivate = false;
+
+	collisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
+	SetRootComponent(collisionMesh);
+	collisionMesh->SetNotifyRigidBodyCollision(true);
+	collisionMesh->SetVisibility(false);
+	
+	launchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
+	launchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void AProjectile::BeginPlay()
