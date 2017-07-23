@@ -7,19 +7,20 @@
 
 class UTankAimingComponent;
 
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TANKGAME_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	float acceptanceRadius = 5000;
+
 private:
 	virtual void BeginPlay() override;
 	
 	virtual void Tick(float DeltaTime) override;
-	
-	float acceptanceRadius = 3000;
 
-	//New
 	UTankAimingComponent* aimingComponent = nullptr;
 
 };
