@@ -9,6 +9,7 @@ then uses MoveBarrelTowards to position the barrel for firing.
 #include "Projectile.h"
 
 
+
 UTankAimingComponent::UTankAimingComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -80,7 +81,7 @@ void UTankAimingComponent::AimAt(FVector hitLocation)
 bool UTankAimingComponent::IsBarrelMoving()
 {
 	auto barrelForward = barrel->GetForwardVector();
-	return !(barrelForward.Equals(aimDir, 0.01f));
+	return !(barrelForward.Equals(aimDir, 0.1f));
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
@@ -135,4 +136,9 @@ void UTankAimingComponent::Fire()
 		projectile->LaunchProjectile(launchSpeed);
 		lastFiredTimeStamp = FPlatformTime::Seconds();
 	}
+}
+
+EFiringState UTankAimingComponent::GetFiringState()
+{
+	return firingState;
 }

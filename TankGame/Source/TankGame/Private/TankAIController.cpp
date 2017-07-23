@@ -30,5 +30,10 @@ void ATankAIController::Tick(float DeltaTime)
 	MoveToActor(player, acceptanceRadius);
 
 	aimingComponent->AimAt(player->GetActorLocation());
-	aimingComponent->Fire();
+	
+	if (aimingComponent->GetFiringState() == EFiringState::Locked)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AI %s Is Locked."), *(GetPawn()->GetName()));
+		aimingComponent->Fire();
+	}
 }
