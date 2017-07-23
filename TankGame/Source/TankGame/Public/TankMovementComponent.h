@@ -15,6 +15,8 @@ public:
 
 	//UTankMovementComponent();
 
+	virtual void BeginPlay() override;
+
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UStaticMeshComponent* bodyToSet);
 
@@ -24,11 +26,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendTurnRight(float amount);
 
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	void SetLeftThrottle(float throttle);
-
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	void SetRightThrottle(float throttle);
 
 private:
 
@@ -40,4 +37,17 @@ private:
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 	float maxThrottleForce = 50000000.0f;	//Theres two of these for each track 
+
+	void CancelOutSideWaysMovement();
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit);
+
+	float currentLeftThrottle = 0.0f;
+	float currentRightThrottle = 0.0f;
+	void SetLeftThrottle(float throttle);
+	void SetRightThrottle(float throttle);
+	void SetLeftTrackForce();
+	void SetRightTrackForce();
+
 };
