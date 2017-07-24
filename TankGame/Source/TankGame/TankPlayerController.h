@@ -5,6 +5,7 @@
 #include "TankPlayerController.generated.h"	//Must be last include
 
 class UTankAimingComponent;
+class ATank;
 
 UCLASS()
 class TANKGAME_API ATankPlayerController : public APlayerController
@@ -18,6 +19,9 @@ public:
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void SetTankRef(ATank* tankRef);
 
 private:
 	void AimTowardsCrossHair();

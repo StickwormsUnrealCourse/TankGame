@@ -26,3 +26,19 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
+
+
+float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
+{
+	auto damageToApply = FMath::Clamp (DamageAmount, 0.0f, currentHealth);
+	currentHealth -= damageToApply;
+
+	UE_LOG(LogTemp, Warning, TEXT("Taking Damage: %s %f"), *(GetName()), damageToApply);
+
+	return damageToApply;
+}
+
+float ATank::GetHealth()
+{
+	return currentHealth;
+}

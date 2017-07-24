@@ -7,7 +7,7 @@ Is provided speed on launch and travel forwards.
 
 
 #include "Projectile.h"
-//#include "ParticleDefinitions.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "ParticleHelper.h"
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
@@ -58,7 +58,7 @@ void AProjectile::LaunchProjectile(float speed)
 
 void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("HIT: %s %f"), *(otherActor->GetName()), FPlatformTime::Seconds());
+	//UE_LOG(LogTemp, Warning, TEXT("HIT: %s %f"), *(otherActor->GetName()), FPlatformTime::Seconds());
 
 	SetRootComponent(impactBlast);
 	collisionMesh->DestroyComponent();
@@ -67,9 +67,17 @@ void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, U
 	impactBlast->Activate();
 	explosionForce->FireImpulse();
 
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		projectileDamage,
+		GetActorLocation(),
+		explosionForce->Radius, //use the same radius as the explosion
+		UDamageType::StaticClass(),
+		TArray<AActor*>()	//damage all actors
+		);
+
 	FTimerHandle timer;
 	GetWorld()->GetTimerManager().SetTimer(timer, this, &AProjectile::OnTimerExpire, destroyDelay, false);
-
 }
 
 void AProjectile::OnTimerExpire()

@@ -8,7 +8,9 @@ GetSightRayHitLocation finds what the screen crosshair is pointing at
 
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 #include "TankGame.h"
+
 
 void ATankPlayerController::BeginPlay()
 {
@@ -20,6 +22,13 @@ void ATankPlayerController::BeginPlay()
 	if (aimingComponent)
 	{
 		FoundAimingComponent(aimingComponent);
+	}
+
+	//TODO THis looks dodgy in the blueprint, relies on aiming component being found and generating the UI widgit first.
+	auto tankRef = Cast<ATank>(GetPawn());
+	if (tankRef)
+	{
+		SetTankRef(tankRef);
 	}
 }
 
