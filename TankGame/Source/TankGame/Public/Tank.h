@@ -13,8 +13,11 @@ class TANKGAME_API ATank : public APawn
 
 public:
 
-	UFUNCTION(BlueprintCallable, Category = "UI")
-	float GetHealth();
+	UFUNCTION(BlueprintPure, Category = "UI")
+	float GetHealth() const;
+
+	UFUNCTION(BlueprintPure, Category = "UI")
+	float GetHealthPercent() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
