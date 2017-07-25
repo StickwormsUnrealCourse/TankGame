@@ -81,7 +81,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& hitLocation) const
 		hit,
 		camWorldLoc,
 		camWorldLoc + worldDirection * 999999999.0f,	//Max Range
-		ECollisionChannel::ECC_Visibility
+		ECollisionChannel::ECC_Camera
 		);
 	hitLocation = hit.Location;
 

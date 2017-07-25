@@ -33,7 +33,7 @@ private:
 	float maxHealth = 100.0f;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
-	float currentHealth = maxHealth;
+	float currentHealth;
 
 	ATank();
 	
