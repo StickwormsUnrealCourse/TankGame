@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tank.h"
+
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "TankAIController.generated.h"
@@ -21,6 +21,11 @@ private:
 	
 	virtual void Tick(float DeltaTime) override;
 
+	virtual	void ATankAIController::SetPawn(APawn* InPawn) override;
+
 	UTankAimingComponent* aimingComponent = nullptr;
+
+	UFUNCTION()
+	void OnTankDeath();
 
 };

@@ -19,6 +19,8 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	currentHealth = maxHealth;
 }
 
 // Called to bind functionality to input
@@ -34,6 +36,11 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 	currentHealth -= damageToApply;
 
 	UE_LOG(LogTemp, Warning, TEXT("Taking Damage: %s %f"), *(GetName()), damageToApply);
+
+	if (DamageAmount >= currentHealth)
+	{
+		OnDeath.Broadcast();
+	}
 
 	return damageToApply;
 }

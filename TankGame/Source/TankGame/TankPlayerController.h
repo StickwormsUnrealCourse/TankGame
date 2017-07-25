@@ -13,8 +13,6 @@ class TANKGAME_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
-	virtual void Tick(float DeltaTime) override;
-	virtual void BeginPlay() override;
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
@@ -24,6 +22,12 @@ protected:
 	void SetTankRef(ATank* tankRef);
 
 private:
+
+	virtual void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override;
+
+	virtual	void ATankPlayerController::SetPawn(APawn* InPawn) override;
+
 	void AimTowardsCrossHair();
 	bool GetSightRayHitLocation(FVector& hitLocation) const;
 
@@ -33,4 +37,7 @@ private:
 	float crosshairYLoc = 0.3333f;
 
 	UTankAimingComponent* aimingComponent = nullptr;
+
+	UFUNCTION()
+	void OnTankDeath();
 };

@@ -146,7 +146,7 @@ void UTankAimingComponent::Fire()
 		projectile->LaunchProjectile(launchSpeed);
 		lastFiredTimeStamp = FPlatformTime::Seconds();
 
-		UE_LOG(LogTemp, Warning, TEXT("%s Fired."), *(GetOwner()->GetName()));
+		//UE_LOG(LogTemp, Warning, TEXT("%s Fired."), *(GetOwner()->GetName()));
 	}
 }
 

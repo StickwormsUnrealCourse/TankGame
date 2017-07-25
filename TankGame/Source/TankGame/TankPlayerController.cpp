@@ -38,6 +38,21 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrossHair();
 }
 
+//Subscribe to delegate on possesion as BeginPlay may be too early
+void ATankPlayerController::SetPawn(APawn* inPawn)
+{
+	Super::SetPawn(inPawn);
+	if (inPawn)
+	{
+		auto possessedTank = Cast<ATank>(inPawn);
+		if (!ensure(possessedTank)) { return; }
+
+		//Subscribe and like!
+		possessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnTankDeath);
+	}
+
+}
+
 void ATankPlayerController::AimTowardsCrossHair()
 {
 	if (!ensure(aimingComponent)) { return; }
@@ -76,3 +91,8 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& hitLocation) const
 	return false;
 }
 
+void ATankPlayerController::OnTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s has died."), *(GetName()));
+	StartSpectatingOnly();
+}

@@ -6,6 +6,8 @@
 
 class UTankMovementComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class TANKGAME_API ATank : public APawn
 {
@@ -18,6 +20,8 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "UI")
 	float GetHealthPercent() const;
+
+	FTankDelegate OnDeath;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
